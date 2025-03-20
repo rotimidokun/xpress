@@ -1,13 +1,14 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface XpressLogoProps {
   className?: string;
+  linkTo?: string;
 }
 
-const XpressLogo = ({ className = "h-8" }: XpressLogoProps) => {
+const XpressLogo = ({ className = "h-8", linkTo = "/" }: XpressLogoProps) => {
   return (
-    <Link to="/" className="logo-animation">
+    <Link to={linkTo} className="logo-animation">
       <svg
         width="110"
         height="24"

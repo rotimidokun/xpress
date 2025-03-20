@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { MoreHorizontal, Plus, Search, Bell, User as UserIcon, ChevronDown } from "lucide-react";
+import { MoreHorizontal, Plus, Search, Bell } from "lucide-react";
 import XpressLogo from "@/components/XpressLogo";
 import StatusBadge from "@/components/StatusBadge";
 import VerifierFilter from "@/components/VerifierFilter";
-import UserAvatar from "@/components/UserAvatar";
+import UserDropdown from "@/components/UserDropdown";
+import { isLoggedIn } from "@/services/authService";
 
 interface Verifier {
   id: string;
@@ -49,8 +50,7 @@ const Dashboard = () => {
 
   // Check if user is logged in
   useEffect(() => {
-    const isLoggedIn = sessionStorage.getItem("userLoggedIn") === "true";
-    if (!isLoggedIn) {
+    if (!isLoggedIn()) {
       navigate("/signin");
       toast({
         title: "Authentication required",
@@ -131,15 +131,6 @@ const Dashboard = () => {
     }
   };
 
-  const handleSignOut = () => {
-    sessionStorage.removeItem("userLoggedIn");
-    navigate("/signin");
-    toast({
-      title: "Signed out",
-      description: "You have been successfully signed out."
-    });
-  };
-
   const handleRowAction = (id: string) => {
     toast({
       title: "Action Menu",
@@ -153,7 +144,7 @@ const Dashboard = () => {
       <header className="bg-white border-b border-gray-200">
         <div className="flex justify-between items-center px-4 md:px-8 py-3">
           <div className="flex items-center space-x-2">
-            <XpressLogo className="h-8" />
+            <XpressLogo linkTo="/dashboard" className="h-8" />
           </div>
           
           <div className="flex items-center space-x-4">
@@ -162,17 +153,7 @@ const Dashboard = () => {
               <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
             
-            <div className="flex items-center space-x-2">
-              <UserAvatar />
-              
-              <button 
-                onClick={handleSignOut}
-                className="hidden md:flex items-center text-sm text-gray-700 hover:text-gray-900"
-              >
-                <span>Admin User</span>
-                <ChevronDown className="h-4 w-4 ml-1" />
-              </button>
-            </div>
+            <UserDropdown />
           </div>
         </div>
       </header>

@@ -4,41 +4,76 @@ import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import XpressLogo from "@/components/XpressLogo";
+import { loginUser } from "@/services/authService";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email') setEmail(value);
+    if (name === 'password') setPassword(value);
+    
+    // Clear error when field is edited
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+    
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password) {
-      toast({
-        title: "Error",
-        description: "Please fill in all fields",
-        variant: "destructive",
-      });
+    if (!validate()) {
       return;
     }
 
     try {
       setIsLoading(true);
-      // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Save to session storage
-      sessionStorage.setItem("userLoggedIn", "true");
+      // Attempt login
+      const success = loginUser(email, password);
       
-      toast({
-        title: "Success",
-        description: "Successfully signed in!",
-      });
-      
-      navigate("/dashboard");
+      if (success) {
+        toast({
+          title: "Success",
+          description: "Successfully signed in!",
+        });
+        
+        navigate("/dashboard");
+      } else {
+        toast({
+          title: "Error",
+          description: "Invalid email or password. Please try again.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",
@@ -81,12 +116,16 @@ const SignIn = () => {
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-xpress-blue focus:border-transparent input-transition"
+                onChange={handleChange}
+                className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-xpress-blue focus:border-transparent input-transition`}
                 placeholder="Enter your email"
               />
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -96,10 +135,11 @@ const SignIn = () => {
               <div className="relative">
                 <input
                   id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-xpress-blue focus:border-transparent input-transition"
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border ${errors.password ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-xpress-blue focus:border-transparent input-transition`}
                   placeholder="Enter your password"
                 />
                 <button
@@ -114,6 +154,9 @@ const SignIn = () => {
                   )}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
             </div>
 
             <div className="flex items-center justify-between">
