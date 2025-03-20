@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
@@ -13,7 +12,10 @@ const VerifierFilter = ({ value, onChange }: VerifierFilterProps) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -43,7 +45,7 @@ const VerifierFilter = ({ value, onChange }: VerifierFilterProps) => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full md:w-56 flex items-center justify-between px-4 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-xpress-blue text-left"
+        className="w-full md:w-56 flex items-center justify-between px-4 py-2 bg-white border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-xpress-blue text-left"
       >
         <span>{getDisplayText()}</span>
         <ChevronDown className="h-4 w-4 text-gray-500" />
@@ -69,7 +71,9 @@ const VerifierFilter = ({ value, onChange }: VerifierFilterProps) => {
                 setIsOpen(false);
               }}
               className={`block w-full text-left px-4 py-3 text-sm ${
-                value === "active" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"
+                value === "active"
+                  ? "bg-gray-100 font-medium"
+                  : "hover:bg-gray-50"
               }`}
             >
               Active Verifiers
@@ -80,7 +84,9 @@ const VerifierFilter = ({ value, onChange }: VerifierFilterProps) => {
                 setIsOpen(false);
               }}
               className={`block w-full text-left px-4 py-3 text-sm ${
-                value === "awaiting" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"
+                value === "awaiting"
+                  ? "bg-gray-100 font-medium"
+                  : "hover:bg-gray-50"
               }`}
             >
               Pending Verifiers
@@ -91,7 +97,9 @@ const VerifierFilter = ({ value, onChange }: VerifierFilterProps) => {
                 setIsOpen(false);
               }}
               className={`block w-full text-left px-4 py-3 text-sm ${
-                value === "deactivated" ? "bg-gray-100 font-medium" : "hover:bg-gray-50"
+                value === "deactivated"
+                  ? "bg-gray-100 font-medium"
+                  : "hover:bg-gray-50"
               }`}
             >
               Deactivated Verifiers

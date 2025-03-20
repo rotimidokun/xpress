@@ -161,9 +161,9 @@
 
 /* Pagination styles */
 .pagination-button {
-  @apply px-3 py-1 mx-1 rounded border border-gray-200 hover:bg-gray-50 transition-colors;
+  @apply px-3 py-1 mx-1 text-xpress-label-black hover:text-xpress-blue transition-colors border-none bg-transparent;
 }
 
 .pagination-button.active {
-  @apply bg-primary text-white border-primary hover:bg-primary/90;
+  @apply text-xpress-blue font-medium border-none bg-transparent;
 }

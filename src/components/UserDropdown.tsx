@@ -1,50 +1,60 @@
-
-import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChevronDown, LogOut } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import UserAvatar from './UserAvatar';
-import { logoutUser } from '@/services/authService';
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronDown, LogOut } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import UserAvatar from "./UserAvatar";
+import { logoutUser, getCurrentUser } from "@/services/authService";
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [businessName, setBusinessName] = useState("User");
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  useEffect(() => {
+    const currentUser = getCurrentUser();
+    if (currentUser && currentUser.businessName) {
+      setBusinessName(currentUser.businessName);
+    }
+  }, []);
+
   const handleSignOut = () => {
     logoutUser();
-    navigate('/signin');
+    navigate("/signin");
     toast({
-      title: 'Signed out',
-      description: 'You have been successfully signed out.'
+      title: "Signed out",
+      description: "You have been successfully signed out.",
     });
   };
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2"
       >
         <UserAvatar />
-        
+
         <div className="hidden md:flex items-center text-sm text-gray-700 hover:text-gray-900">
-          <span>Admin User</span>
+          <span>{businessName}</span>
           <ChevronDown className="h-4 w-4 ml-1" />
         </div>
       </button>
