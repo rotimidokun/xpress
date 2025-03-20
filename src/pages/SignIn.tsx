@@ -97,7 +97,7 @@ const SignIn = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel className="text-gray-700">Email Address</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your email" {...field} />
                     </FormControl>
@@ -111,7 +111,7 @@ const SignIn = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className="text-gray-700">Password</FormLabel>
                     <div className="relative">
                       <FormControl>
                         <Input
