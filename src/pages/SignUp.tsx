@@ -1,8 +1,8 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Upload, ChevronDown } from "lucide-react";
+import { Eye, EyeOff, Upload, Check } from "lucide-react";
 import XpressLogo from "@/components/XpressLogo";
 import { registerUser } from "@/services/authService";
 import { useForm } from "react-hook-form";
@@ -44,10 +44,10 @@ const step2Schema = yup.object({
   password: yup
     .string()
     .min(8, "Password must be at least 8 characters")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-    )
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/\d/, "Password must contain at least one number")
+    .matches(/[@$!%*?&]/, "Password must contain at least one special character")
     .required("Password is required"),
   confirmPassword: yup
     .string()
@@ -68,6 +68,13 @@ const SignUp = () => {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  
+  // Password validation states
+  const [hasLowercase, setHasLowercase] = useState(false);
+  const [hasUppercase, setHasUppercase] = useState(false);
+  const [hasNumber, setHasNumber] = useState(false);
+  const [hasSpecial, setHasSpecial] = useState(false);
+  const [hasMinLength, setHasMinLength] = useState(false);
   
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -95,6 +102,26 @@ const SignUp = () => {
       confirmPassword: "",
     },
   });
+  
+  // Watch the password field to provide live feedback
+  const password = form.watch("password");
+  
+  // Update validation states whenever password changes
+  useEffect(() => {
+    if (password) {
+      setHasLowercase(/[a-z]/.test(password));
+      setHasUppercase(/[A-Z]/.test(password));
+      setHasNumber(/\d/.test(password));
+      setHasSpecial(/[@$!%*?&]/.test(password));
+      setHasMinLength(password.length >= 8);
+    } else {
+      setHasLowercase(false);
+      setHasUppercase(false);
+      setHasNumber(false);
+      setHasSpecial(false);
+      setHasMinLength(false);
+    }
+  }, [password]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -131,6 +158,15 @@ const SignUp = () => {
     ]);
     
     if (result) {
+      // Pre-fill contact information from business information
+      const businessName = form.getValues("businessName");
+      const businessPhone = form.getValues("businessPhone");
+      const businessEmail = form.getValues("businessEmail");
+      
+      form.setValue("contactName", businessName, { shouldValidate: false });
+      form.setValue("contactPhone", businessPhone, { shouldValidate: false });
+      form.setValue("contactEmail", businessEmail, { shouldValidate: false });
+      
       setStep(2);
     } else {
       toast({
@@ -511,6 +547,42 @@ const SignUp = () => {
                             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                           </button>
                         </div>
+                        
+                        {/* Password strength indicators */}
+                        {password && (
+                          <div className="mt-2 space-y-1 text-sm">
+                            <div className="flex items-center gap-1">
+                              <span className={`inline-flex items-center ${hasLowercase ? 'text-green-600' : 'text-gray-500'}`}>
+                                {hasLowercase ? <Check className="h-3 w-3" /> : <span className="h-3 w-3 rounded-full border border-gray-400" />}
+                                <span className="ml-1">Lowercase</span>
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className={`inline-flex items-center ${hasUppercase ? 'text-green-600' : 'text-gray-500'}`}>
+                                {hasUppercase ? <Check className="h-3 w-3" /> : <span className="h-3 w-3 rounded-full border border-gray-400" />}
+                                <span className="ml-1">Uppercase</span>
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className={`inline-flex items-center ${hasNumber ? 'text-green-600' : 'text-gray-500'}`}>
+                                {hasNumber ? <Check className="h-3 w-3" /> : <span className="h-3 w-3 rounded-full border border-gray-400" />}
+                                <span className="ml-1">Number</span>
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className={`inline-flex items-center ${hasSpecial ? 'text-green-600' : 'text-gray-500'}`}>
+                                {hasSpecial ? <Check className="h-3 w-3" /> : <span className="h-3 w-3 rounded-full border border-gray-400" />}
+                                <span className="ml-1">Special character</span>
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className={`inline-flex items-center ${hasMinLength ? 'text-green-600' : 'text-gray-500'}`}>
+                                {hasMinLength ? <Check className="h-3 w-3" /> : <span className="h-3 w-3 rounded-full border border-gray-400" />}
+                                <span className="ml-1">8+ characters</span>
+                              </span>
+                            </div>
+                          </div>
+                        )}
                         <FormMessage />
                       </FormItem>
                     )}
@@ -552,6 +624,10 @@ const SignUp = () => {
                     >
                       Back
                     </Button>
+                    
+                    <div className="text-gray-500 text-sm mr-auto ml-4">
+                      Step 2 of 2
+                    </div>
 
                     <Button
                       type="submit"
@@ -570,7 +646,10 @@ const SignUp = () => {
 
       <RegistrationSuccessModal
         isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
+        onClose={() => {
+          setShowSuccessModal(false);
+          navigate("/signin");
+        }}
       />
     </div>
   );
