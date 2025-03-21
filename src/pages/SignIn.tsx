@@ -72,10 +72,10 @@ const SignIn = () => {
 
   return (
     <div className="min-h-screen flex flex-col animate-fade-in">
-      <header className="py-5 px-8 sm:px-16">
-        <div className="container mx-auto flex justify-between items-center">
+      <header className="pt-8 pb-2 sm:py-5 sm:px-16">
+        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
           <XpressLogo />
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 pt-4 sm:pt-0">
             <span className="text-sm text-xpress-gray">
               New to Xpress Rewards?
             </span>
