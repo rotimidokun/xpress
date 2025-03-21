@@ -35,8 +35,15 @@ A modern, responsive dashboard for Xpress Rewards partners to manage verifiers a
 ## Screenshots
 
 - Dashboard with verifier management
+  <img width="1437" alt="image" src="https://github.com/user-attachments/assets/c16f2251-b0e3-4a76-8715-e173d87fd577" />
+
 - Mobile-responsive sidebar navigation
+  <img width="705" alt="image" src="https://github.com/user-attachments/assets/0e1f81fe-bff2-422e-9ae3-8c5f46a7bda4" />
+  
 - User authentication screens
+  <img width="1437" alt="image" src="https://github.com/user-attachments/assets/77db6309-5820-4425-9d63-61370ce63692" />
+  <img width="1437" alt="image" src="https://github.com/user-attachments/assets/94c36043-931f-41fd-b13c-c0f3cc20a5a4" />
+
 
 ## Future Enhancements
 
