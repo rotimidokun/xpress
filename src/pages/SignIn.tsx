@@ -18,19 +18,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-
-const signInSchema = yup.object({
-  email: yup
-    .string()
-    .email("Please enter a valid email")
-    .required("Email is required"),
-  password: yup.string().required("Password is required"),
-});
+import { PasswordInput } from "@/components/PasswordInput";
+import { signInSchema } from "@/validations/authValidation";
 
 type SignInFormData = yup.InferType<typeof signInSchema>;
 
 const SignIn = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -62,7 +55,7 @@ const SignIn = () => {
       } else {
         toast({
           title: "Error",
-          description: "Invalid email or password. Please try again.",
+          description: "Incorrect email or password. Please try again.",
           variant: "destructive",
         });
       }
@@ -131,38 +124,10 @@ const SignIn = () => {
                 )}
               />
 
-              <FormField
+              <PasswordInput
                 control={form.control}
                 name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="!text-xpress-label-black font-medium">
-                      Password
-                    </FormLabel>
-                    <div className="relative">
-                      <FormControl>
-                        <Input
-                          className="rounded-sm"
-                          type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-5 w-5" color="#606060" />
-                        ) : (
-                          <Eye className="h-5 w-5" color="#606060" />
-                        )}
-                      </button>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Password"
               />
 
               <div className="flex items-center justify-between">
