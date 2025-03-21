@@ -197,7 +197,7 @@ export function ContactInfoStep({
           )}
         />
 
-        <h2 className="text-xl font-medium text-xpress-blue pt-4">Password</h2>
+        <h2 className="text-sm font-medium text-xpress-blue pt-4">Password</h2>
 
         <FormField
           control={control}
