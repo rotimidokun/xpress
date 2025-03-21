@@ -133,7 +133,7 @@ export function ContactInfoStep({
           />
         </div>
 
-        <h2 className="text-xl font-medium text-xpress-blue pt-4">
+        <h2 className="text-sm font-medium text-xpress-blue pt-4">
           Contact Person Information
         </h2>
 
