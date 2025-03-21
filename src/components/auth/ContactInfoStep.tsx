@@ -33,7 +33,7 @@ export function ContactInfoStep({
 }: ContactInfoStepProps) {
   return (
     <div>
-      <h2 className="text-sm font-medium text-xpress-blue pb-4">
+      <h2 className="text-sm font-medium text-xpress-blue pb-3">
         Business Address
       </h2>
 
@@ -132,11 +132,13 @@ export function ContactInfoStep({
             )}
           />
         </div>
+      </div>
 
-        <h2 className="text-sm font-medium text-xpress-blue pt-4">
-          Contact Person Information
-        </h2>
+      <h2 className="text-sm font-medium text-xpress-blue pt-10 pb-3">
+        Contact Person Information
+      </h2>
 
+      <div className="space-y-6">
         <FormField
           control={control}
           name="contactName"
@@ -196,9 +198,13 @@ export function ContactInfoStep({
             </FormItem>
           )}
         />
+      </div>
 
-        <h2 className="text-sm font-medium text-xpress-blue pt-4">Password</h2>
+      <h2 className="text-sm font-medium text-xpress-blue pt-10 pb-3">
+        Password
+      </h2>
 
+      <div className="space-y-6">
         <FormField
           control={control}
           name="password"
