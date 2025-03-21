@@ -42,7 +42,6 @@ export const registerUser = (user: User): boolean => {
   // Add new user
   users[user.businessEmail] = {
     ...user,
-    // logo: null // We can't store File objects in localStorage
   };
 
   saveUsers(users);

@@ -1,69 +1,50 @@
-# Welcome to your Lovable project
+# Xpress Rewards Dashboard
 
-## Project info
+A modern, responsive dashboard for Xpress Rewards partners to manage verifiers and track business operations.
 
-**URL**: https://lovable.dev/projects/8447c4e0-889e-4400-9f30-6b94f8872db4
+## Features
 
-## How can I edit this code?
+- **User Authentication**: Secure login and registration system for business partners
+- **Responsive Design**: Fully responsive interface that works seamlessly on desktop, tablet, and mobile devices
+- **Verifier Management**: View, filter, and manage verifiers with status tracking
+- **Coming Soon Features**: Deals and Transactions modules (in development)
 
-There are several ways of editing your application.
+## Technology Stack
 
-**Use Lovable**
+- **Frontend**: React with TypeScript
+- **Styling**: Tailwind CSS for responsive design
+- **State Management**: React Hooks for local state management
+- **Form Handling**: React Hook Form with Yup validation
+- **UI Components**: Custom components with Lucide React icons
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8447c4e0-889e-4400-9f30-6b94f8872db4) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Clone the repository
+2. Install dependencies:
+3. Start the development server:
 
-**Use your preferred IDE**
+## Project Structure
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- `/src/components`: Reusable UI components
+- `/src/pages`: Main application pages
+- `/src/hooks`: Custom React hooks
+- `/src/services`: API and authentication services
+- `/src/assets`: Icons and static assets
+- `/src/validations`: Form validation schemas
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Screenshots
 
-Follow these steps:
+- Dashboard with verifier management
+- Mobile-responsive sidebar navigation
+- User authentication screens
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Future Enhancements
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Integration with backend API
+- Deals management system
+- Transaction tracking and reporting
+- Enhanced user profile management
 
-# Step 3: Install the necessary dependencies.
-npm i
+## License
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/8447c4e0-889e-4400-9f30-6b94f8872db4) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project is proprietary and confidential.
