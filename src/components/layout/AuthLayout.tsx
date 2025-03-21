@@ -23,10 +23,10 @@ export function AuthLayout({
 
   return (
     <div className="min-h-screen flex flex-col animate-fade-in">
-      <header className="py-5 px-8 sm:px-16">
-        <div className="container mx-auto flex justify-between items-center">
+      <header className="pt-8 pb-2 sm:py-5 sm:px-16">
+        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
           <XpressLogo />
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 pt-4 sm:pt-0">
             <span className="text-sm text-xpress-gray">
               {alternateActionText}
             </span>
@@ -42,7 +42,7 @@ export function AuthLayout({
 
       <main className="flex-1 flex items-center justify-center px-4 py-8">
         <div className="w-full max-w-2xl form-card bg-white rounded-lg p-8">
-          <div className="mb-8">
+          <div className="mb-6">
             <h1 className="text-2xl font-medium text-xpress-blue">{title}</h1>
             <p className="text-xpress-gray mt-2 mb-4 text-xs">{subtitle}</p>
             <div className="h-0.5 bg-[#F5F6F8]" />
